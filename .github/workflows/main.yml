@@ -34,4 +34,5 @@ jobs:
         run: |
           aws deploy create-deployment \
             --application-name RHM \
+            --deployment-group-name production \
             --s3-location bucket=my-deployment-bucket,bundleType=zip,key=app.zip
