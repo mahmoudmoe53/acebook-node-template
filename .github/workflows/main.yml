@@ -33,6 +33,6 @@ jobs:
       - name: Deploy to EC2 using CodeDeploy
         run: |
           aws deploy create-deployment \
-            --application-name MyCodeDeployApplication \
-            --deployment-group-name MyDeploymentGroup \
+            --application-name RHM \
+            --deployment-group-name RHMB-group \
             --s3-location bucket=my-deployment-bucket,bundleType=zip,key=app.zip
