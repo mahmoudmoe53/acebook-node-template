@@ -1,0 +1,40 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main  # Triggers this workflow on a push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Step 3: Zip the application files
+      - name: Zip application files
+        run: zip -r app.zip .
+
+      # Step 4: Upload the zipped file to S3
+      - name: Upload to S3
+        run: |
+          aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/app.zip
+
+      # Step 5: Deploy with CodeDeploy
+      - name: Deploy with AWS CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name ${{ secrets.CODEDEPLOY_APP_NAME }} \
+            --deployment-group-name ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP }} \
+            --s3-location bucket=${{ secrets.S3_BUCKET }},key=app.zip,bundleType=zip
