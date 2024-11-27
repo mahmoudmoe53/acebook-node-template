@@ -28,3 +28,11 @@ jobs:
       - name: Upload artifact to S3
         run: |
           aws s3 cp app.zip s3://rhmbucket/app.zip
+
+# Step 5: Deploy using CodeDeploy
+      - name: Deploy to EC2 using CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name MyCodeDeployApplication \
+            --deployment-group-name MyDeploymentGroup \
+            --s3-location bucket=my-deployment-bucket,bundleType=zip,key=app.zip
