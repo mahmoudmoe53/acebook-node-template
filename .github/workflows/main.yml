@@ -35,4 +35,4 @@ jobs:
           aws deploy create-deployment \
             --application-name RHM \
             --deployment-group-name production \
-            --s3-location bucket=rhmbucket,bundleType=zip,key=app.zip
+            --s3-location bucket=rhmbucket,bundleType=zip,key=app.zip,region=eu-west-2
