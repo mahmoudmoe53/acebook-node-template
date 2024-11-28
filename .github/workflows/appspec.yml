@@ -1,22 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /app.zip
-    destination: /home/ubuntu/app
-hooks:
-  BeforeInstall:
-    - location: scripts/before_install.sh
-      timeout: 180
-      runas: ubuntu
-  Install:
-    - location: scripts/install.sh
-      timeout: 180
-      runas: ubuntu
-  ApplicationStart:
-    - location: scripts/start.sh
-      timeout: 180
-      runas: ubuntu
-  ApplicationStop:
-    - location: scripts/stop.sh
-      timeout: 180
-      runas: ubuntu
+  - source: /
+    destination: var/www/app
+
+
+# Destination is where the files will be copied to on the EC2
